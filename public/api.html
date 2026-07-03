@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Enterprise API Reference | HuMem.cloud</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0d1117">
+
+  <meta name="description" content="Robust, enterprise-grade REST API reference for HuMem.cloud. Integrate sovereign AI memory with Latenode, Python, Node.js, and multi-agent workflows.">
+  <meta name="robots" content="index, follow">
+  
+  <link rel="stylesheet" href="/index.css">
+  <style>
+    /* Documentation specific styles */
+    .docs-container {
+      max-width: 900px;
+      margin: 120px auto 80px auto;
+      padding: 0 20px;
+    }
+    .docs-container h1 { font-size: 2.5rem; margin-bottom: 20px; color: #fff; }
+    .docs-container h2 { font-size: 1.8rem; margin-top: 40px; margin-bottom: 15px; color: #a5b4fc; }
+    .docs-container h3 { font-size: 1.4rem; margin-top: 30px; margin-bottom: 10px; color: #fff; }
+    .docs-container p { color: #a1a1aa; line-height: 1.7; margin-bottom: 15px; }
+    
+    .code-block {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 15px;
+      font-family: monospace;
+      color: #38bdf8;
+      overflow-x: auto;
+      margin-bottom: 20px;
+    }
+    .endpoint {
+      display: inline-block;
+      background: #3b82f6;
+      color: white;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      margin-right: 10px;
+      font-size: 0.9rem;
+    }
+    .endpoint.post { background: #10b981; }
+    .endpoint.get { background: #3b82f6; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="/" class="logo-group">
+        <img src="/logo.jpg" alt="HuMem" class="logo-img" width="44" height="44">
+        <span class="logo-text">HuMem<span class="logo-dot">.cloud</span></span>
+      </a>
+      <nav class="header-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/docs.html" class="nav-link">Docs</a>
+        <a href="/api.html" class="nav-link" style="color:#fff;">API</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="docs-container">
+    <h1>Enterprise API Reference</h1>
+    <p>HuMem.cloud exposes an extremely robust, RESTful API layer perfectly suited for integration with Latenode workers, multi-agent frameworks (CrewAI, AutoGen), and backend systems (Node.js, Python).</p>
+
+    <hr style="border: 1px solid #1e293b; margin: 40px 0;">
+
+    <h2>Authentication</h2>
+    <p>All endpoints require a Bearer token. Generate your <code>HUMEM_API_KEY</code> from the dashboard and pass it in the Authorization header.</p>
+    <div class="code-block">Authorization: Bearer YOUR_HUMEM_API_KEY</div>
+
+    <h2>Core Endpoints</h2>
+
+    <h3><span class="endpoint post">POST</span> /v1/memory/ingest</h3>
+    <p>Stores a single fact or experience into the temporal knowledge graph.</p>
+    <p><strong>Payload:</strong></p>
+    <div class="code-block">{
+  "user_id": "agent-orchestrator-1",
+  "role": "user",
+  "content": "The CEO prefers dark mode dashboards.",
+  "scope": "tenant-local", /* Optional: 'tenant-local' or 'global-shared' */
+  "modality": "text" /* Optional: 'text', 'image', 'audio', 'video' */
+}</div>
+
+    <h3><span class="endpoint post">POST</span> /v1/memory/ingest/batch</h3>
+    <p>Enterprise batch ingestion. Ideal for Latenode workers scraping web context and dumping it instantly into memory. Uses a synchronous SQLite transaction for maximum throughput.</p>
+    <p><strong>Payload:</strong></p>
+    <div class="code-block">{
+  "user_id": "scraper-bot",
+  "memories": [
+    { "role": "system", "content": "Context block 1..." },
+    { "role": "system", "content": "Context block 2..." }
+  ]
+}</div>
+
+    <h3><span class="endpoint post">POST</span> /v1/memory/query</h3>
+    <p>Perform a hybrid search (semantic vector + temporal SQLite relational) across your specific cognitive scopes.</p>
+    <p><strong>Payload:</strong></p>
+    <div class="code-block">{
+  "user_id": "agent-orchestrator-1",
+  "query_string": "What does the CEO prefer for the UI?",
+  "category": "left", /* Optional: filter by cognitive layer */
+  "scope": "tenant-local"
+}</div>
+    <p><strong>Response:</strong></p>
+    <div class="code-block">{
+  "results": [
+    {
+      "content": "The CEO prefers dark mode dashboards.",
+      "score": 0.94,
+      "timestamp": "2026-07-03T12:00:00Z"
+    }
+  ]
+}</div>
+
+    <h2>Advanced Integrations</h2>
+
+    <h3><span class="endpoint post">POST</span> /v1/orca/*</h3>
+    <p>Direct proxy to the <strong>OrcaOS</strong> intelligence layer for heavy multimodal processing, pre-emptive summarization, and cognitive load resolution.</p>
+
+    <h3><span class="endpoint post">POST</span> /v1/linea/*</h3>
+    <p>Direct proxy to the <strong>Linea-1</strong> orchestration layer. Pass workloads directly to the dynamic workflow engine to apply graph fixes or run complex dispatch routines.</p>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <p class="footer-copy">&copy; 2026 BotVibe AI LLC. <a href="/terms.html">Terms</a> | <a href="/privacy.html">Privacy</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

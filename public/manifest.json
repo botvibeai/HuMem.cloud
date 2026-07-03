@@ -1,0 +1,21 @@
+{
+  "name": "HuMem.cloud",
+  "short_name": "HuMem",
+  "description": "Enterprise-grade cognitive memory, multimodal processing, and cross-agent shared cognition for LLMs and Agents.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "icons": [
+    {
+      "src": "/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

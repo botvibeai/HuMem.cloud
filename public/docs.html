@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>110% Documentation | HuMem.cloud Architecture</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#0d1117">
+
+  <meta name="description" content="The 110% Documentation for HuMem.cloud. Understand how the v9.5 Cognitive Architecture functions, including OrcaOS and Linea-1 integration.">
+  <meta name="robots" content="index, follow">
+  
+  <link rel="stylesheet" href="/index.css">
+  <style>
+    /* Documentation specific styles */
+    .docs-container {
+      max-width: 900px;
+      margin: 120px auto 80px auto;
+      padding: 0 20px;
+    }
+    .docs-container h1 { font-size: 2.5rem; margin-bottom: 20px; color: #fff; }
+    .docs-container h2 { font-size: 1.8rem; margin-top: 40px; margin-bottom: 15px; color: #a5b4fc; }
+    .docs-container h3 { font-size: 1.4rem; margin-top: 30px; margin-bottom: 10px; color: #fff; }
+    .docs-container p, .docs-container li { color: #a1a1aa; line-height: 1.7; margin-bottom: 15px; }
+    .docs-container ul { padding-left: 20px; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="/" class="logo-group">
+        <img src="/logo.jpg" alt="HuMem" class="logo-img" width="44" height="44">
+        <span class="logo-text">HuMem<span class="logo-dot">.cloud</span></span>
+      </a>
+      <nav class="header-nav">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/docs.html" class="nav-link" style="color:#fff;">Docs</a>
+        <a href="/api.html" class="nav-link">API</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="docs-container">
+    <h1>The 110% Documentation</h1>
+    <p>Welcome to the ultimate deep-dive into the <strong>v9.5 Cognitive Architecture</strong> driving HuMem.cloud. This document details how we achieve Unstoppable AI Cognition across three worker layers.</p>
+
+    <hr style="border: 1px solid #1e293b; margin: 40px 0;">
+
+    <h2>The Three-Layer Intelligence Stack</h2>
+    <p>To move past standard RAG limitations, HuMem coordinates with two other powerful edge systems designed by BotVibe AI.</p>
+    
+    <h3>1. HuMem.cloud (The Storage Graph)</h3>
+    <p>This is the core storage engine. It utilizes Cloudflare Durable Objects to guarantee strict, single-threaded consistency over a local SQLite database. We merge this with Vectorize embeddings so that an agent's memory can be searched semantically <em>and</em> temporally.</p>
+
+    <h3>2. OrcaOS (The Processing Engine)</h3>
+    <p>Because embedding images, parsing audio, and resolving memory conflicts requires massive cognitive load, HuMem proxies those heavy operations to OrcaOS. OrcaOS runs dynamic "blueprints" to chunk and embed data before returning it safely to HuMem.</p>
+
+    <h3>3. Linea-1 (The Orchestrator)</h3>
+    <p>Linea-1 is the central nervous system. It constantly queries HuMem to synthesize <strong>Identity Continuity</strong>—long-term, stable beliefs about the user. When OrcaOS detects that HuMem's memory graph has a contradiction, Linea-1's dynamic workflows safely rewrite and apply fixes to the storage layer.</p>
+
+    <h2>v9.5 Breakthrough Capabilities</h2>
+    <ul>
+      <li><strong>Multimodal Consolidation:</strong> We don't just store text. Pass images or audio URLs, and OrcaOS translates them into semantic vectors stored directly in the `tenant-local` scope of HuMem.</li>
+      <li><strong>Predictive Cognitive Load:</strong> If a Latenode worker dumps massive context blocks into HuMem, the system detects the "cognitive pressure" and preemptively summarizes the data before an LLM attempts to read it.</li>
+      <li><strong>Autonomous Self-Repair:</strong> When the system is idle, an `alarm()` hook initiates "Dreaming". The engine scans for conflicting facts (e.g. "User likes Dark Mode" vs "User hates Dark Mode") and untangles them automatically via OrcaOS logic.</li>
+      <li><strong>Shared Cognition:</strong> Setting `scope: global-shared` allows a swarm of independent agents to build a shared knowledge base, while keeping `tenant-local` entirely encrypted and private to the user session.</li>
+    </ul>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <p class="footer-copy">&copy; 2026 BotVibe AI LLC. <a href="/terms.html">Terms</a> | <a href="/privacy.html">Privacy</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

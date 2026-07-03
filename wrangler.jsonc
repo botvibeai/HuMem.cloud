@@ -1,0 +1,58 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "humem-cloud",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-04-07",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./public"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "MEMCOG_OBJECT",
+        "class_name": "MemCogDurableObject"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_classes": ["MemoryDO"]
+    },
+    {
+      "tag": "v2",
+      "renamed_classes": [
+        { "from": "MemoryDO", "to": "MemCogDurableObject" }
+      ]
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "SEMANTIC_CACHE_KV",
+      "id": "63b03eb6e439495a83550f2d680aad38"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "ANALYTIC",
+      "database_name": "analytic-db",
+      "database_id": "8de25cf9-bbd8-4e2e-b868-9e346b50b1ce"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  // TODO: Re-add service bindings once linea-1 and orca workers are ready
+  // "services": [
+  //   { "binding": "linea_1", "service": "linea-1" },
+  //   { "binding": "orca", "service": "orca" }
+  // ],
+  "observability": {
+    "enabled": true
+  }
+}

@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+.wrangler/
+
+# Wrangler secrets (NEVER commit these)
+.dev.vars
+.env
+.env.*
+*.env
+
+# Build outputs
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
