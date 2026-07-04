@@ -1,4 +1,4 @@
-const CACHE_NAME = 'humem-cloud-v1';
+const CACHE_NAME = 'humem-cloud-v9.5';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -22,6 +22,9 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+  if (url.pathname.startsWith('/v1/')) return;
+
   event.respondWith(
     caches.match(event.request).then((response) => {
       // Cache hit - return response

@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>HuMem.cloud | AI Memory Platform — Sovereign Cognitive Architecture</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>HuMem.cloud | AI Memory Platform â€” Sovereign Cognitive Architecture</title>
 
   <!-- PWA & Mobile Optimization -->
   <link rel="manifest" href="/manifest.json">
@@ -35,7 +35,7 @@
   <!-- Open Graph / Social Preview -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://humem.cloud/">
-  <meta property="og:title" content="HuMem.cloud — Enterprise Cognitive Architecture">
+  <meta property="og:title" content="HuMem.cloud â€” Enterprise Cognitive Architecture">
   <meta property="og:description" content="Sovereign, edge-native memory platform featuring multimodal processing, shared cognition, and autonomous self-repair.">
   <meta property="og:image" content="https://humem.cloud/logo.jpg">
   <meta property="og:image:width" content="1200">
@@ -46,7 +46,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://humem.cloud/">
-  <meta name="twitter:title" content="HuMem.cloud — Enterprise Cognitive Architecture">
+  <meta name="twitter:title" content="HuMem.cloud â€” Enterprise Cognitive Architecture">
   <meta name="twitter:description" content="Sovereign, edge-native memory platform featuring multimodal processing, shared cognition, and autonomous self-repair.">
   <meta name="twitter:image" content="https://humem.cloud/logo.jpg">
   <meta name="twitter:site" content="@BotVibeAI">
@@ -59,8 +59,16 @@
 
   <link rel="stylesheet" href="/index.css">
   <script src="/index.js" defer></script>
+  <script type="module" src="/auth.js"></script>
+  <script src="/paypal.js" defer></script>
   
-  <script>
+  <script type="module">
+    import { initAuthStateListener } from '/auth.js';
+    // Initialize auth listener on landing page to update UI
+    window.addEventListener('load', () => {
+      initAuthStateListener(false); // false = don't force redirect
+    });
+    
     // Register PWA Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -151,11 +159,11 @@
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════ HEADER ═══ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• HEADER â•â•â• -->
   <header class="site-header">
     <div class="container header-container">
       <a href="/" class="logo-group" aria-label="HuMem.cloud Home">
-        <img src="/logo.jpg" alt="HuMem.cloud — Persistent AI Memory Platform" class="logo-img" width="44" height="44">
+        <img src="/logo.jpg" alt="HuMem.cloud â€” Persistent AI Memory Platform" class="logo-img" width="44" height="44">
         <span class="logo-text">HuMem<span class="logo-dot">.cloud</span></span>
       </a>
       <nav class="header-nav" aria-label="Primary Navigation">
@@ -165,23 +173,23 @@
         <a href="/api.html" class="nav-link">API</a>
       </nav>
       <div class="api-status" aria-live="polite">
-        <a href="#" class="btn btn-secondary btn-sm" onclick="alert('Login & Resend OAuth integration coming soon.')">Dashboard Login</a>
+        <button id="login-btn" class="btn btn-secondary btn-sm" onclick="if(window.loginWithGoogle) window.loginWithGoogle()">Dashboard Login</button>
       </div>
     </div>
   </header>
 
-  <!-- ═══════════════════════════════════════════ MAIN ═══ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• MAIN â•â•â• -->
   <main class="main-content">
     <div class="container">
 
-      <!-- ── HERO ── -->
+      <!-- â”€â”€ HERO â”€â”€ -->
       <section class="hero-section" id="hero" aria-labelledby="hero-heading">
-        <div class="hero-badge">⚡ v9.5 Cognitive Architecture Deployed</div>
+        <div class="hero-badge">âš¡ v9.5 Cognitive Architecture Deployed</div>
         <h1 id="hero-heading">Unstoppable AI Cognition<br><span class="gradient-text">At The Edge</span></h1>
         <p class="hero-sub">HuMem.cloud is a sovereign, enterprise-grade cognitive architecture. Featuring <strong>Multimodal Memory Consolidation</strong>, <strong>Cross-Agent Shared Cognition</strong>, and <strong>Autonomous Self-Repair</strong> across a globally distributed temporal knowledge graph.</p>
         <div class="hero-cta-row">
           <a href="#pricing" class="btn btn-primary">View Pricing</a>
-          <a href="/docs.html" class="btn btn-ghost">Read the 110% Docs →</a>
+          <a href="/docs.html" class="btn btn-ghost">Read the 110% Docs â†’</a>
         </div>
         <div class="hero-stats">
           <div class="stat-item">
@@ -206,65 +214,82 @@
         </div>
       </section>
 
-      <!-- ── HOW IT WORKS ── -->
+      <!-- â”€â”€ HOW IT WORKS â”€â”€ -->
       <section class="section" id="how-it-works" aria-labelledby="how-heading">
         <h2 id="how-heading" class="section-title">The v9.5 Intelligence Stack</h2>
         <p class="section-subtitle">HuMem.cloud orchestrates three powerful components (MemCog, OrcaOS, and Linea-1) into a single, unified cognitive architecture.</p>
         <div class="memory-layers-grid">
           <article class="memory-card soul-card">
-            <div class="memory-card-icon">🧠</div>
+            <div class="memory-card-icon">ðŸ§ </div>
             <h3>Multimodal Consolidation</h3>
             <p>Ingest raw text, images, and audio. The engine automatically vectorizes and links multimodal data into the temporal knowledge graph, providing holistic context to your agents.</p>
           </article>
           <article class="memory-card user-card">
-            <div class="memory-card-icon">🌐</div>
+            <div class="memory-card-icon">ðŸŒ</div>
             <h3>Cross-Agent Shared Cognition</h3>
             <p>Define memory scopes as `tenant-local` or `global-shared`. Agents can communicate, collaborate, and share core beliefs instantly across the intelligence layer.</p>
           </article>
           <article class="memory-card agents-card">
-            <div class="memory-card-icon">⚙️</div>
+            <div class="memory-card-icon">âš™ï¸</div>
             <h3>Autonomous Self-Repair</h3>
             <p>During the background 'alarm()' dreaming phase, HuMem actively scans for semantic contradictions. If found, OrcaOS triggers automated graph patching and reconciliation.</p>
           </article>
           <article class="memory-card memory-card-ep">
-            <div class="memory-card-icon">🛡️</div>
+            <div class="memory-card-icon">ðŸ›¡ï¸</div>
             <h3>Identity Continuity</h3>
             <p>Linea-1 periodically queries deep left/right brain context to synthesize stable identity profiles and manage predictive cognitive load pressure before agents are overwhelmed.</p>
           </article>
         </div>
       </section>
 
-      <!-- ── PRICING ── -->
+      <!-- â”€â”€ PRICING â”€â”€ -->
       <section class="section" id="pricing" aria-labelledby="pricing-heading">
         <h2 id="pricing-heading" class="section-title">Enterprise Cognitive Pricing</h2>
-        <p class="section-subtitle">Priced dynamically via PayPal based on cognitive load and multimodal processing scale.</p>
+        <p class="section-subtitle">Powered by PayPal. Cancel anytime. Annual plans save 20%.</p>
+
+        <!-- Billing Toggle -->
+        <div class="billing-toggle" role="group" aria-label="Billing period">
+          <button class="billing-toggle-btn active" data-billing="monthly" onclick="setBillingPeriod('monthly')">Monthly</button>
+          <button class="billing-toggle-btn" data-billing="annual" onclick="setBillingPeriod('annual')">
+            Annual <span class="toggle-save-badge">Save 20%</span>
+          </button>
+        </div>
+
         <div class="pricing-grid">
 
           <article class="pricing-card" aria-label="Developer plan">
             <div class="pricing-tier">Developer</div>
-            <div class="pricing-price"><span class="price-amount">$49</span><span class="price-period">/month</span></div>
+            <div class="pricing-price">
+              <span class="price-amount" id="price-developer">$49</span>
+              <span class="price-period" id="period-developer">/month</span>
+            </div>
+            <span class="savings-badge" id="savings-developer" style="display:none;">ðŸŽ‰ You save $120/year</span>
             <p class="pricing-desc">For builders designing next-generation memory architectures.</p>
             <ul class="pricing-features">
-              <li>✓ Standard cognitive load limits</li>
-              <li>✓ 1 private Durable Object</li>
-              <li>✓ Basic text vectorization</li>
-              <li>✓ Community API Access</li>
+              <li>âœ“ Standard cognitive load limits</li>
+              <li>âœ“ 1 private Durable Object</li>
+              <li>âœ“ Basic text vectorization</li>
+              <li>âœ“ Community API Access</li>
             </ul>
-            <a href="#" class="btn btn-ghost" onclick="alert('PayPal integration pending.')">Subscribe via PayPal</a>
+            <div id="paypal-btn-developer" style="margin-top: 16px;"></div>
           </article>
 
-          <article class="pricing-card pricing-card-featured" aria-label="Enterprise Scale plan — most popular">
+          <article class="pricing-card pricing-card-featured" aria-label="Enterprise Scale plan â€” most popular">
             <div class="pricing-badge">Most Popular</div>
             <div class="pricing-tier">Enterprise Scale</div>
-            <div class="pricing-price"><span class="price-amount">$499</span><span class="price-period">/month</span></div>
+            <div class="pricing-price">
+              <span class="price-amount" id="price-enterprise">$499</span>
+              <span class="price-period" id="period-enterprise">/month</span>
+            </div>
+            <span class="savings-badge" id="savings-enterprise" style="display:none;">ðŸŽ‰ You save $1,200/year</span>
             <p class="pricing-desc">For production deployments requiring autonomous repair and multimodal processing.</p>
             <ul class="pricing-features">
-              <li>✓ Unlimited private memory objects</li>
-              <li>✓ Multimodal Consolidation (Image/Audio)</li>
-              <li>✓ Cross-Agent Shared Cognition scopes</li>
-              <li>✓ Autonomous Graph Repair routines</li>
+              <li>âœ“ Unlimited private memory objects</li>
+              <li>âœ“ Multimodal Consolidation (Image/Audio)</li>
+              <li>âœ“ Cross-Agent Shared Cognition scopes</li>
+              <li>âœ“ Autonomous Graph Repair routines</li>
             </ul>
-            <a href="#" class="btn btn-primary" onclick="alert('PayPal integration pending.')">Subscribe via PayPal</a>
+            <div id="paypal-btn-enterprise" style="margin-top: 16px;"></div>
           </article>
 
           <article class="pricing-card" aria-label="Unstoppable Core plan">
@@ -272,12 +297,12 @@
             <div class="pricing-price"><span class="price-amount">Custom</span></div>
             <p class="pricing-desc">Full access to the Linea-1 orchestration and OrcaOS planning suite.</p>
             <ul class="pricing-features">
-              <li>✓ Dedicated Edge Infrastructure</li>
-              <li>✓ Custom Identity Continuity tuning</li>
-              <li>✓ White-glove integration</li>
-              <li>✓ 24/7 dedicated engineering support</li>
+              <li>âœ“ Dedicated Edge Infrastructure</li>
+              <li>âœ“ Custom Identity Continuity tuning</li>
+              <li>âœ“ White-glove integration</li>
+              <li>âœ“ 24/7 dedicated engineering support</li>
             </ul>
-            <a href="mailto:support@botvibe.ai?subject=Unstoppable Core Inquiry" class="btn btn-ghost">Contact Sales</a>
+            <a href="mailto:sales@humem.cloud?subject=Unstoppable Core Inquiry" class="btn btn-ghost">Contact Sales</a>
           </article>
 
         </div>
@@ -286,7 +311,7 @@
     </div>
   </main>
 
-  <!-- ═══════════════════════════════════════════ FOOTER ═══ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• FOOTER â•â•â• -->
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-container">
       <div class="footer-brand">
@@ -300,9 +325,9 @@
         <a href="/terms.html">Terms of Service</a>
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/sitemap.xml">Sitemap</a>
-        <a href="https://botvibe.ai" rel="noopener">BotVibe AI</a>
+        <a href="https://botvibe.ai" rel="noopener noreferrer">BotVibe AI</a>
       </div>
-      <p class="footer-copy">&copy; 2026 BotVibe AI LLC. Built at the edge in Clintwood, VA. · <a href="mailto:support@botvibe.ai">support@botvibe.ai</a></p>
+      <p class="footer-copy">&copy; 2026 BotVibe AI LLC. Built at the edge in Clintwood, VA. Â· <a href="mailto:support@botvibe.ai">support@botvibe.ai</a></p>
     </div>
   </footer>
 

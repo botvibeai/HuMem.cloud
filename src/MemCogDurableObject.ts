@@ -1,8 +1,11 @@
 export class MemCogDurableObject {
-  private state: any;
+  private state: DurableObjectState;
   private initialized: boolean = false;
 
-  constructor(state: any, env: any) {
+  // Type for a single memory item used in batch ingest
+  private static readonly MEMORY_ITEM_SCHEMA = true;
+
+  constructor(state: DurableObjectState, env: unknown) {
     this.state = state;
   }
 
@@ -82,15 +85,22 @@ export class MemCogDurableObject {
 
     // API Route: Batch Ingest Memory
     if (path === '/v1/memory/ingest/batch' && request.method === 'POST') {
-      const body = await request.json() as any;
+      const body = await request.json() as { memories?: unknown[] };
       const { memories } = body;
+      if (!Array.isArray(memories)) {
+        return new Response(JSON.stringify({ error: 'memories must be an array' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+      }
+      if (memories.length > 100) {
+        return new Response(JSON.stringify({ error: 'Batch limit is 100 memories per request' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+      }
       
       const now = new Date().toISOString();
       let count = 0;
 
       await this.state.storage.sql.exec('BEGIN TRANSACTION;');
       try {
-        for (const mem of memories) {
+        for (const item of memories) {
+          const mem = item as { id: string; fact: string; category: string; valid_from: string; importance: number; scope?: string; modality?: string; media_ref?: string | null };
           const { id, fact, category, valid_from, importance, scope = 'tenant-local', modality = 'text', media_ref = null } = mem;
           await this.state.storage.sql.exec(`
             INSERT INTO rememory_nodes (id, fact, category, valid_from, scope, modality, media_ref)
@@ -155,13 +165,17 @@ export class MemCogDurableObject {
       }
 
       // Track active memory usage and increment recall counts
-      for (const row of results) {
+      if (results.length > 0) {
+        const placeholders = results.map(() => '?').join(',');
+        const ids = results.map((r: Record<string, unknown>) => r.id as string);
+        const now = new Date().toISOString();
+        
         await this.state.storage.sql.exec(`
           UPDATE memcog1_optimization
           SET recall_count = recall_count + 1,
               last_accessed = ?
-          WHERE node_id = ?;
-        `, new Date().toISOString(), row.id);
+          WHERE node_id IN (${placeholders});
+        `, now, ...ids);
       }
 
       return new Response(JSON.stringify({ results }), {
@@ -186,49 +200,54 @@ export class MemCogDurableObject {
     const records = cursor.toArray();
     const now = new Date();
 
+    // Collect IDs of memories whose strength has fallen below the retention threshold
+    const decayedIds: string[] = [];
     for (const record of records) {
       const lastAccess = new Date(record.last_accessed as string);
-      const diffTime = Math.abs(now.getTime() - lastAccess.getTime());
-      const diffDays = diffTime / (1000 * 60 * 60 * 24);
+      const diffDays   = Math.abs(now.getTime() - lastAccess.getTime()) / (1000 * 60 * 60 * 24);
 
-      // Ebbinghaus Forgetting Curve Equation
-      const lambda = record.decay_constant as number;
-      const r = record.recall_count as number;
-      const importance = record.importance as number;
-      const strength = importance * Math.exp(-lambda * diffDays) * (1 + r * 0.2);
+      // Ebbinghaus Forgetting Curve
+      const lambda     = record.decay_constant as number;
+      const r          = record.recall_count   as number;
+      const importance = record.importance     as number;
+      const strength   = importance * Math.exp(-lambda * diffDays) * (1 + r * 0.2);
 
-      // If memory strength drops below the retention threshold, prune it from the active database
       if (strength < 0.15) {
-        await this.state.storage.sql.exec(`
-          DELETE FROM rememory_nodes WHERE id = ?;
-        `, record.node_id);
-
-        await this.state.storage.sql.exec(`
-          DELETE FROM memcog1_optimization WHERE node_id = ?;
-        `, record.node_id);
+        decayedIds.push(record.node_id as string);
       }
     }
 
+    // Batch DELETE all decayed nodes in two queries instead of N*2 queries
+    if (decayedIds.length > 0) {
+      const placeholders = decayedIds.map(() => '?').join(',');
+      await this.state.storage.sql.exec(
+        `DELETE FROM rememory_nodes       WHERE id      IN (${placeholders});`,
+        ...decayedIds
+      );
+      await this.state.storage.sql.exec(
+        `DELETE FROM memcog1_optimization WHERE node_id IN (${placeholders});`,
+        ...decayedIds
+      );
+    }
+
     // 9.5 Upgrade: Autonomous Self-Repair
-    // Scan for highly conflicting or overloaded semantic regions
-    const conflicts = await this.state.storage.sql.exec(`
+    const conflicts     = await this.state.storage.sql.exec(`
       SELECT category, COUNT(id) as count
       FROM rememory_nodes
       WHERE invalid_at IS NULL
       GROUP BY category
       HAVING count > 100;
     `);
+    const conflictRows = conflicts.toArray();
 
-    if (conflicts.rows.length > 0) {
-      // Trigger OrcaOS dynamic resolution blueprint to patch the graph
+    if (conflictRows.length > 0) {
       void fetch('https://orcaos.botvibe.tech/route/conflict-resolution', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'resolve-conflicts',
-          anomalies: conflicts.toArray()
-        })
-      }).catch(() => {});
+        body: JSON.stringify({ action: 'resolve-conflicts', anomalies: conflictRows })
+      }).catch((err: unknown) => {
+        console.error(JSON.stringify({ event: 'orcaos_conflict_resolution_failed', error: String(err) }));
+      });
     }
 
     // Optimize the embedded database to reclaim space

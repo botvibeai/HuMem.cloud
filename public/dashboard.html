@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | HuMem.cloud</title>
+  <link rel="stylesheet" href="/index.css">
+  
+  <script type="module" src="/auth.js"></script>
+  <script type="module">
+    import { initAuthStateListener, logout } from '/auth.js';
+    
+    // Initialize auth listener and force redirect if not logged in
+    window.addEventListener('load', () => {
+      initAuthStateListener(true); // true = redirect if not logged in
+      
+      const logoutBtn = document.getElementById('logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+      }
+    });
+  </script>
+  <style>
+    .dashboard-container {
+      max-width: 800px;
+      margin: 100px auto;
+      padding: 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+    .profile-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 2px solid var(--brand-accent);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="/" class="logo-group">
+        <img src="/logo.jpg" alt="HuMem.cloud" class="logo-img" width="44" height="44">
+        <span class="logo-text">HuMem<span class="logo-dot">.cloud</span></span>
+      </a>
+      <div class="api-status">
+        <button id="logout-btn" class="btn btn-secondary btn-sm">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="dashboard-container">
+        <img id="user-profile-img" class="profile-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2NjYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMjAgMjF2LTJhNCA0IDAgMCAwLTRtLTRoNE0xNiAzLjEzYTQgNCAwIDAgMSAwIDcuNzVNMTEgMTFhNCA0IDAgMSAwIDAtOCA0 0 0 0 0 0IDh6Ii8+PC9zdmc+" alt="Profile">
+        <h2>Welcome to your Dashboard</h2>
+        <p>Logged in as: <strong id="user-email">Loading...</strong></p>
+        
+        <div style="margin-top: 40px; text-align: left;">
+          <div class="memory-card">
+            <h3>Your Memory Instances</h3>
+            <p>You currently do not have any active memory nodes. Please subscribe to a plan to provision a persistent memory instance.</p>
+            <a href="/#pricing" class="btn btn-primary" style="margin-top: 15px;">View Plans</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

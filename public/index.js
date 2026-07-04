@@ -65,15 +65,21 @@ document.addEventListener('DOMContentLoaded', () => {
     ingestResult.classList.add('hidden');
 
     try {
-      const response = await fetch('/memory', {
+      const token = localStorage.getItem('humem_jwt') || 'demo_token';
+      const response = await fetch('/v1/memory/ingest', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          user_id: activeUserId,
-          content: content,
-          role: role
+          id: crypto.randomUUID(),
+          fact: content,
+          category: role,
+          valid_from: new Date().toISOString(),
+          importance: 0.8,
+          scope: 'tenant-local',
+          modality: 'text'
         })
       });
 
@@ -126,7 +132,19 @@ document.addEventListener('DOMContentLoaded', () => {
     recallResult.classList.add('hidden');
 
     try {
-      const response = await fetch(`/memory?user_id=${encodeURIComponent(activeUserId)}&q=${encodeURIComponent(query)}`);
+      const token = localStorage.getItem('humem_jwt') || 'demo_token';
+      const response = await fetch('/v1/memory/query', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          query_string: query,
+          current_time: new Date().toISOString(),
+          scope: 'tenant-local'
+        })
+      });
       const data = await response.json();
 
       if (response.ok) {
@@ -157,24 +175,24 @@ document.addEventListener('DOMContentLoaded', () => {
         // Render Relational SQLite Facts
         let relationalHtml = `<div class="recall-section">
           <div class="recall-section-title">Knowledge Graph (SQLite Facts)</div>`;
-        if (data.relationalContext && data.relationalContext.length > 0) {
+        if (data.results && data.results.length > 0) {
           relationalHtml += `
             <table class="relational-table">
               <thead>
                 <tr>
-                  <th>Entity</th>
-                  <th>Relationship</th>
-                  <th>Value</th>
+                  <th>Fact</th>
+                  <th>Category</th>
+                  <th>Score</th>
                 </tr>
               </thead>
               <tbody>
           `;
-          data.relationalContext.forEach(fact => {
+          data.results.forEach(fact => {
             relationalHtml += `
               <tr>
-                <td><strong>${escapeHtml(fact.entity)}</strong></td>
-                <td>${escapeHtml(fact.relationship)}</td>
-                <td>${escapeHtml(fact.value)}</td>
+                <td><strong>${escapeHtml(fact.fact)}</strong></td>
+                <td>${escapeHtml(fact.category)}</td>
+                <td>${escapeHtml(String(fact.importance))}</td>
               </tr>
             `;
           });
