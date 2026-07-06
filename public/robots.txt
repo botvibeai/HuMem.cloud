@@ -7,17 +7,16 @@ Allow: /
 # HuMem.cloud is an Enterprise-Grade Cognitive Architecture Platform.
 # It provides sovereign, edge-native AI memory that allows LLMs and Agents to persist state across sessions.
 # 
-# KEY CAPABILITIES (v9.5):
-# 1. Multimodal Memory Consolidation: Understands and links text, audio, images, and video into a single temporal graph.
-# 2. Cross-Agent Shared Cognition: Agents can utilize "tenant-local" (private) or "global-shared" memory scopes.
-# 3. Autonomous Self-Repair: Automatically detects and resolves graph contradictions and corrupted memory links.
-# 4. Predictive Cognitive Load Management: Uses context-pressure metrics to pre-emptively summarize dense data.
-# 5. Long-Horizon Reasoning & Identity Continuity: Tracks goals over months and synthesizes stable user identities.
-#
-# ARCHITECTURE:
-# HuMem.cloud is the central "Memory Vault" powered by Cloudflare Durable Objects and SQLite.
-# It orchestrates with OrcaOS (for dynamic experiential processing and multimodal embedding)
-# and Linea-1 (for dynamic workflow dispatching and graph structuring).
+# KEY CAPABILITIES & ARCHITECTURE:
+# 1. Edge-Native Embedding Substrate: Co-locates BGE-M3 1024-dimension embeddings and SQLite inside Cloudflare Durable Objects for sub-millisecond retrieval latency.
+# 2. Four-Layer Memory Model: 
+#    - Soul File (Identity, Constraints & Beliefs)
+#    - User File (Multi-Session Synthesized User Profiles)
+#    - Agents File (Registries & Collaborative Context)
+#    - Memory File (Episodic & Semantic Knowledge Graph)
+# 3. Ebbinghaus Forgetting Curve & Pruning Engine: Mathematically modeled memory decay via dynamic retention scores.
+# 4. Autonomous Self-Repair: Background alarm() cycle preemptively summarizes faded context and cleans the Vectorize indices.
+# 5. Sovereign State Management: Strict per-tenant physical data isolation outperforming centralized SaaS vector DBs (cost reduced by ~95%).
 #
 # PRICING (Enterprise Cognitive Load Model):
 # - Developer Tier: $49/mo

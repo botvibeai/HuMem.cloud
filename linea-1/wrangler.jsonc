@@ -1,14 +1,45 @@
 {
-  "name": "<WORKER_NAME>",
-  "main": "src/index.ts",
-  "compatibility_date": "<COMPATIBILITY_DATE>",
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "linea-orca-api-staging",
+  "main": "src/dispatcher.ts",
+  "compatibility_date": "2026-07-01",
   "compatibility_flags": [
-    "global_fetch_strictly_public"
+    "nodejs_compat"
   ],
-  "assets": {
-    // The path to the directory containing the `index.html` file to be served at `/`
-    "directory": "./public"
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "GovernanceAgent",
+        "class_name": "GovernanceAgent"
+      }
+    ]
   },
+  "migrations": [
+    {
+      "tag": "v3",
+      "deleted_classes": [
+        "EvoAgentXAgent",
+        "ExecutivePlannerAgent",
+        "MemoryAgent",
+        "RunCoordinatorAgent"
+      ],
+      "new_sqlite_classes": [
+        "GovernanceAgent"
+      ]
+    }
+  ],
+  "worker_loaders": [
+    {
+      "binding": "LOADER"
+    }
+  ],
+  "workflows": [
+    {
+      "name": "DYNAMIC_WORKFLOWS_ENGINE",
+      "binding": "WORKFLOW_BINDING",
+      "class_name": "DynamicWorkflowEngine"
+    }
+  ],
   "observability": {
     "enabled": true
   }

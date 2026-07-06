@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -51,24 +51,33 @@
 
     <hr style="border: 1px solid #1e293b; margin: 40px 0;">
 
-    <h2>The Three-Layer Intelligence Stack</h2>
-    <p>To move past standard RAG limitations, HuMem coordinates with two other powerful edge systems designed by BotVibe AI.</p>
+    <h2>Sovereign State Management & Edge-Native Substrate</h2>
+    <p>HuMem.cloud eliminates centralized database dependencies to achieve sub-millisecond local state access and absolute per-tenant isolation. It embeds retrieval and storage pipelines directly at the edge using Cloudflare Workers AI.</p>
     
-    <h3>1. HuMem.cloud (The Storage Graph)</h3>
-    <p>This is the core storage engine. It utilizes Cloudflare Durable Objects to guarantee strict, single-threaded consistency over a local SQLite database. We merge this with Vectorize embeddings so that an agent's memory can be searched semantically <em>and</em> temporally.</p>
+    <h3>Edge-Native Embedding Engine</h3>
+    <p>The system utilizes the open-source <strong>BGE-M3 multilingual model (@cf/baai/bge-m3)</strong> running serverless on Cloudflare's global GPU network. It transforms raw text into highly descriptive <strong>1024-dimensional vector embeddings</strong> and natively supports an expansive <strong>8,192-token context window</strong>. Embeddings are indexed in Cloudflare Vectorize (humem-semantic-index) and coupled with a zero-latency SQLite database inside Durable Objects.</p>
 
-    <h3>2. OrcaOS (The Processing Engine)</h3>
-    <p>Because embedding images, parsing audio, and resolving memory conflicts requires massive cognitive load, HuMem proxies those heavy operations to OrcaOS. OrcaOS runs dynamic "blueprints" to chunk and embed data before returning it safely to HuMem.</p>
+    <h2>The Four-Layer Memory Model</h2>
+    <p>Enterprise buyers evaluate memory architectures based on functional cognitive capabilities rather than raw database technologies. HuMem implements this through a standardized four-layer model:</p>
+    
+    <h3>1. The Soul File (Core)</h3>
+    <p><strong>Identity, Constraints & Beliefs.</strong> Represents the foundational core of the agent's identity. Managed through isolated registries to remain unaffected by adversarial prompt injections.</p>
 
-    <h3>3. Linea-1 (The Orchestrator)</h3>
-    <p>Linea-1 is the central nervous system. It constantly queries HuMem to synthesize <strong>Identity Continuity</strong>â€”long-term, stable beliefs about the user. When OrcaOS detects that HuMem's memory graph has a contradiction, Linea-1's dynamic workflows safely rewrite and apply fixes to the storage layer.</p>
+    <h3>2. The User File</h3>
+    <p><strong>Multi-Session Synthesized User Profiles.</strong> Continuously refines raw conversational data into structured user preferences across disparate historical sessions to guarantee the agent adapts to user workflows.</p>
 
-    <h2>v9.5 Breakthrough Capabilities</h2>
+    <h3>3. The Agents File (Tool)</h3>
+    <p><strong>Registries & Collaborative Context.</strong> Manages the operational, tool, and collaborative state of the agent ecosystem. Facilitates cross-agent shared cognition securely.</p>
+
+    <h3>4. The Memory File</h3>
+    <p><strong>Episodic & Semantic Knowledge Graph.</strong> Serves as the underlying structural substrate that records raw semantic facts and episodic timelines. Prevents the loss of temporal context during high-velocity data ingestion.</p>
+
+    <h2>Ebbinghaus Forgetting Curve and Pruning Engine</h2>
+    <p>To solve unbounded memory growth and context window pollution, HuMem.cloud implements a biologically-inspired Ebbinghaus memory decay algorithm.</p>
     <ul>
-      <li><strong>Multimodal Consolidation:</strong> We don't just store text. Pass images or audio URLs, and OrcaOS translates them into semantic vectors stored directly in the `tenant-local` scope of HuMem.</li>
-      <li><strong>Predictive Cognitive Load:</strong> If a Latenode worker dumps massive context blocks into HuMem, the system detects the "cognitive pressure" and preemptively summarizes the data before an LLM attempts to read it.</li>
-      <li><strong>Autonomous Self-Repair:</strong> When the system is idle, an `alarm()` hook initiates "Dreaming". The engine scans for conflicting facts (e.g. "User likes Dark Mode" vs "User hates Dark Mode") and untangles them automatically via OrcaOS logic.</li>
-      <li><strong>Shared Cognition:</strong> Setting `scope: global-shared` allows a swarm of independent agents to build a shared knowledge base, while keeping `tenant-local` entirely encrypted and private to the user session.</li>
+      <li><strong>Dynamic Retention Scoring:</strong> The "strength" of a memory trace declines exponentially over time unless reinforced through active recall (the Spacing Effect).</li>
+      <li><strong>Category-Specific Half-Lives:</strong> Memory traces are routed into four distinct categories with specialized baseline half-lives (e.g., <em>Strategy</em> ~38 days, <em>Fact</em> ~24 days, <em>Assumption</em> ~19 days, <em>Failure</em> ~11 days).</li>
+      <li><strong>Autonomous Pruning:</strong> A background <code>alarm()</code> dreaming cycle scans for inactive nodes where the calculated strength decays below the threshold. These nodes are summarized into dense narrative context, and the raw granular records are evicted from SQLite and Vectorize.</li>
     </ul>
 
   </main>
