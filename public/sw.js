@@ -9,7 +9,8 @@ const ASSETS_TO_CACHE = [
   '/api.html',
   '/docs.html',
   '/terms.html',
-  '/privacy.html'
+  '/privacy.html',
+  '/signup.html'
 ];
 
 self.addEventListener('install', (event) => {

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | HuMem.cloud AI Intelligence</title>
+  <link rel="stylesheet" href="/index.css">
+  
+  <script type="module">
+    import { initAuthStateListener, loginWithGoogle } from '/auth.js';
+    
+    // Listen for auth state, if already logged in, redirect to dashboard
+    window.addEventListener('load', () => {
+      initAuthStateListener(false); // don't force redirect if logged out
+      
+      const googleBtn = document.getElementById('google-signup-btn');
+      if (googleBtn) {
+        googleBtn.addEventListener('click', () => {
+          const resultBox = document.getElementById('auth-result');
+          resultBox.innerHTML = 'Connecting to Google...';
+          resultBox.className = 'result-box';
+          resultBox.style.display = 'block';
+          
+          loginWithGoogle().catch(err => {
+            resultBox.innerHTML = `❌ Error: ${err.message || 'Authentication failed. Make sure this domain is authorized in Firebase.'}`;
+            resultBox.classList.add('error');
+          });
+        });
+      }
+    });
+  </script>
+  <style>
+    .auth-container {
+      max-width: 450px;
+      margin: 100px auto;
+      padding: 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      backdrop-filter: var(--glass-blur);
+    }
+    .auth-container h2 {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .auth-container p {
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+    .btn-google {
+      background: white;
+      color: #000;
+      width: 100%;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-google:hover {
+      background: #f1f5f9;
+      transform: translateY(-1px);
+    }
+    .btn-google img {
+      width: 20px;
+      height: 20px;
+    }
+    .result-box {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      display: none;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+    .result-box.error {
+      border-color: var(--error-glow);
+      color: #fca5a5;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="/" class="logo-group">
+        <img src="/logo.jpg" alt="HuMem.cloud" class="logo-img" width="44" height="44">
+        <span class="logo-text">HuMem<span class="logo-dot">.cloud</span><span class="logo-subtitle">AI Intelligence</span></span>
+      </a>
+      <nav class="header-nav">
+        <a href="/" class="nav-link">Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="auth-container">
+        <h2>Welcome to HuMem</h2>
+        <p>Sign up or log in to access your AI Intelligence Dashboard.</p>
+        
+        <button id="google-signup-btn" class="btn-google">
+          <svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+            <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
+              <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z"/>
+              <path fill="#34A853" d="M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z"/>
+              <path fill="#FBBC05" d="M -21.484 53.529 C -21.734 52.809 -21.864 52.039 -21.864 51.239 C -21.864 50.439 -21.724 49.669 -21.484 48.949 L -21.484 45.859 L -25.464 45.859 C -26.284 47.479 -26.754 49.299 -26.754 51.239 C -26.754 53.179 -26.284 54.999 -25.464 56.619 L -21.484 53.529 Z"/>
+              <path fill="#EA4335" d="M -14.754 43.989 C -12.984 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z"/>
+            </g>
+          </svg>
+          Continue with Google
+        </button>
+        
+        <div id="auth-result" class="result-box"></div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

@@ -62,8 +62,8 @@ export function initAuthStateListener(requireAuth = false) {
       // Update UI for logged-out user
       const loginBtn = document.getElementById('login-btn');
       if (loginBtn) {
-        loginBtn.textContent = 'Dashboard Login';
-        loginBtn.onclick = loginWithGoogle;
+        loginBtn.textContent = 'Sign Up / Login';
+        loginBtn.onclick = () => { window.location.href = '/signup.html'; };
       }
     }
   });
